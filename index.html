@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的作品展示</title>
+    <style>
+        /* 極簡風格設計 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            text-align: center;
+            padding: 60px 20px 40px 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -0.05em;
+        }
+        header p {
+            color: #666;
+            margin-top: 10px;
+        }
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin-bottom: 60px;
+        }
+        /* 響應式網格布局 */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .gallery-item {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        .gallery-item img, .gallery-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+        .item-info {
+            padding: 15px;
+        }
+        .item-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+        .item-info p {
+            margin: 0;
+            color: #888;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>視覺作品集</h1>
+        <p>歡迎瀏覽我的精選圖片與影片創作</p>
+    </header>
+
+    <div class="container">
+        <div class="gallery">
+            
+            <!-- 圖片項目 1 -->
+            <div class="gallery-item">
+                <!-- 請將 src 替換為你的圖片網址 -->
+                <img src="https://picsum.photos/600/400?random=1" alt="作品圖片">
+                <div class="item-info">
+                    <h3>作品名稱零一</h3>
+                    <p>平面設計 / 2026</p>
+                </div>
+            </div>
+
+            <!-- 圖片項目 2 -->
+            <div class="gallery-item">
+                <img src="https://picsum.photos/600/400?random=2" alt="作品圖片">
+                <div class="item-info">
+                    <h3>作品名稱零二</h3>
+                    <p>品牌合作</p>
+                </div>
+            </div>
+
+            <!-- 影片項目 (以 YouTube 嵌入為例) -->
+            <div class="gallery-item">
+                <!-- 請將 src 裡面的 VIDEO_ID 替換為你的 YouTube 影片 ID -->
+                <iframe width="100%" height="250" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="item-info">
+                    <h3>動態影像展示</h3>
+                    <p>動畫與動態視覺</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
