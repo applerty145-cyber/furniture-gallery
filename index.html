@@ -3,115 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的作品展示</title>
+    <title>精選家具線上展示</title>
     <style>
-        /* 極簡風格設計 */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #fdfcfb; 
+            color: #3e3a36;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
         header {
             text-align: center;
-            padding: 60px 20px 40px 20px;
+            padding: 50px 20px;
+            background-color: #f4efe9; 
+            border-bottom: 1px solid #e5dec9;
         }
         header h1 {
             margin: 0;
-            font-size: 2.5rem;
-            font-weight: 600;
-            letter-spacing: -0.05em;
+            font-size: 2.2rem;
+            color: #2b2622;
+            letter-spacing: 2px;
         }
         header p {
-            color: #666;
-            margin-top: 10px;
+            color: #70665f;
+            margin: 10px 0 0 0;
+            font-size: 1rem;
         }
         .container {
-            max-width: 1200px;
-            width: 90%;
-            margin-bottom: 60px;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
-        /* 響應式網格布局 */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
         }
         .gallery-item {
             background: #fff;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid #eae6e1;
         }
-        .gallery-item:hover {
-            transform: translateY(-5px);
-        }
-        .gallery-item img, .gallery-item video {
+        .gallery-item img {
             width: 100%;
-            height: auto;
-            display: block;
+            height: 240px;
             object-fit: cover;
+            display: block;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .gallery-item img:hover {
+            opacity: 0.9;
         }
         .item-info {
-            padding: 15px;
+            padding: 20px;
+            background: #fff;
         }
         .item-info h3 {
-            margin: 0 0 5px 0;
-            font-size: 1.1rem;
+            margin: 0 0 8px 0;
+            font-size: 1.2rem;
+            color: #2b2622;
         }
         .item-info p {
             margin: 0;
-            color: #888;
-            font-size: 0.9rem;
+            color: #8c7f76;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>視覺作品集</h1>
-        <p>歡迎瀏覽我的精選圖片與影片創作</p>
+        <h1>精選家具線上館</h1>
+        <p>歡迎蒞臨瀏覽｜點擊圖片可放大觀看細節</p>
     </header>
 
     <div class="container">
         <div class="gallery">
             
-            <!-- 圖片項目 1 -->
             <div class="gallery-item">
-                <!-- 請將 src 替換為你的圖片網址 -->
-                <img src="https://picsum.photos/600/400?random=1" alt="作品圖片">
+                <img src="1.jpg" alt="精選家具" onclick="openLightbox(this.src)">
                 <div class="item-info">
-                    <h3>作品名稱零一</h3>
-                    <p>平面設計 / 2026</p>
+                    <h3>精選沙發款式</h3>
+                    <p>經典設計與舒適坐感，歡迎洽詢客製化尺寸與面料。</p>
                 </div>
             </div>
 
-            <!-- 圖片項目 2 -->
             <div class="gallery-item">
-                <img src="https://picsum.photos/600/400?random=2" alt="作品圖片">
+                <img src="2.jpg" alt="精選家具" onclick="openLightbox(this.src)">
                 <div class="item-info">
-                    <h3>作品名稱零二</h3>
-                    <p>品牌合作</p>
+                    <h3>工藝實木餐桌</h3>
+                    <p>溫潤天然木紋，為餐廳營造溫馨穩重的用餐氛圍。</p>
                 </div>
             </div>
 
-            <!-- 影片項目 (以 YouTube 嵌入為例) -->
             <div class="gallery-item">
-                <!-- 請將 src 裡面的 VIDEO_ID 替換為你的 YouTube 影片 ID -->
-                <iframe width="100%" height="250" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <img src="3.jpg" alt="精選家具" onclick="openLightbox(this.src)">
                 <div class="item-info">
-                    <h3>動態影像展示</h3>
-                    <p>動畫與動態視覺</p>
+                    <h3>嚴選設計單椅</h3>
+                    <p>符合人體工學美學，兼具承托力與時尚外觀。</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="4.jpg" alt="精選家具" onclick="openLightbox(this.src)">
+                <div class="item-info">
+                    <h3>質感收納櫃</h3>
+                    <p>兼顧實用機能與現代感線條，輕鬆維持客廳整潔。</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="5.jpg" alt="精選家具" onclick="openLightbox(this.src)">
+                <div class="item-info">
+                    <h3>溫馨臥室床架</h3>
+                    <p>穩固結構、靜音設計，提供您最舒適安穩的睡眠體驗。</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="6.jpg" alt="精選家具" onclick="openLightbox(this.src)">
+                <div class="item-info">
+                    <h3>風格擺飾精品</h3>
+                    <p>點綴空間的絕佳選擇，點亮家中的每一個角落。</p>
                 </div>
             </div>
 
         </div>
     </div>
+
+    <div id="lightbox" class="lightbox" onclick="this.style.display='none'">
+        <img id="lightbox-img" src="" alt="放大圖">
+    </div>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+    </script>
 
 </body>
 </html>
