@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>添興家具｜商品型錄展示</title>
     <style>
         body {
@@ -66,77 +66,85 @@
             line-height: 1.5;
         }
         
-        /* 燈箱基礎背景 */
+        /* 燈箱基礎背景：滿版全螢幕 */
         .lightbox {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            overflow: hidden;
+            touch-action: none;
+        }
+        
+        /* 解放圖片容器：讓它撐滿全螢幕，不再有限制大框框 */
+        .lightbox-content {
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.92);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            touch-action: none; /* 停用瀏覽器預設手勢操作，交由程式控制 */
-        }
-        .lightbox-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 80vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
-        /* 放大容器與圖片：加入平滑縮放與抓取手勢 */
+        
         .img-container {
-            overflow: hidden;
             cursor: grab;
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 100%;
+            height: 100%;
         }
         .img-container:active {
             cursor: grabbing;
         }
+        
+        /* 圖片預設最大化，並套用變形 Origin 置中 */
         .lightbox img {
             max-width: 100%;
-            max-height: 80vh;
-            border-radius: 4px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.3);
-            transform-origin: center center;
-            transition: transform 0.1s ease-out;
+            max-height: 100%;
+            object-fit: contain;
             user-select: none;
             -webkit-user-drag: none;
+            transform-origin: center center;
+            transition: transform 0.05s ease-out;
         }
         
-        /* 關閉按鈕 */
+        /* 獨立出來的頂部非覆蓋式關閉按鈕，永遠固定在最上層 */
         .close-btn {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.2);
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.25);
             color: white;
             border: none;
             width: 45px;
             height: 45px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             border-radius: 50%;
             cursor: pointer;
-            z-index: 1010;
+            z-index: 1020; /* 確保在圖片和控制項之上 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        /* 桌機版：兩側懸浮箭頭 */
+        /* 桌機版：固定在螢幕兩側的懸浮箭頭 */
         .nav-btn {
-            position: fixed;
+            position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
-            width: 55px;
-            height: 55px;
+            width: 60px;
+            height: 60px;
             font-size: 2rem;
             border-radius: 50%;
             cursor: pointer;
@@ -145,45 +153,53 @@
             align-items: center;
             transition: background 0.2s;
             user-select: none;
-            z-index: 1005;
+            z-index: 1010;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.35);
         }
-        .prev-btn { left: 40px; }
-        .next-btn { right: 40px; }
+        .prev-btn { left: 30px; }
+        .next-btn { right: 30px; }
 
-        /* 手機版行動裝置優化 */
+        /* 手機版：獨立底部控制列，與大圖分離，絕不遮擋、不受放大影響 */
         @media (max-width: 768px) {
-            /* 隱藏桌機版懸浮箭頭 */
-            .nav-btn { display: none; }
+            .nav-btn { display: none; } /* 隱藏桌機版兩側箭頭 */
             
-            /* 建立手機版底部專屬按鈕區塊（絕不覆蓋照片） */
             .mobile-controls {
                 position: absolute;
-                bottom: 30px;
+                bottom: 40px;
                 left: 0;
                 width: 100%;
                 display: flex;
                 justify-content: center;
-                gap: 30px;
-                z-index: 1005;
+                gap: 25px;
+                z-index: 1010; /* 確保按鈕永遠浮在放大的圖片上方，不會被吃掉 */
             }
             .mobile-btn {
                 background: rgba(255, 255, 255, 0.25);
                 color: white;
-                border: 1px solid rgba(255,255,255,0.3);
-                padding: 10px 25px;
-                font-size: 1.1rem;
+                border: 1px solid rgba(255,255,255,0.2);
+                padding: 12px 30px;
+                font-size: 1.05rem;
                 border-radius: 30px;
                 cursor: pointer;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+                backdrop-filter: blur(4px); /* 讓按鈕背景微微模糊，更有質感 */
+                -webkit-backdrop-filter: blur(4px);
             }
             .mobile-btn:active {
                 background: rgba(255, 255, 255, 0.4);
             }
+            
+            /* 手機版讓圖片上下留出按鈕與關閉鍵的空間，中間盡可能最大化延伸 */
+            .lightbox img {
+                max-width: 100%;
+                max-height: 80vh;
+            }
         }
 
-        /* 桌機版隱藏手機專屬按鈕 */
+        /* 桌機版隱藏手機專屬底部列 */
         @media (min-width: 769px) {
             .mobile-controls { display: none; }
         }
@@ -246,14 +262,13 @@
         <button class="close-btn" onclick="closeLightbox()">✕</button>
         
         <button class="nav-btn prev-btn" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
+        <button class="nav-btn next-btn" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
         
         <div class="lightbox-content">
             <div class="img-container" id="imgContainer">
                 <img id="lightbox-img" src="" alt="放大圖">
             </div>
         </div>
-        
-        <button class="nav-btn next-btn" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
         
         <div class="mobile-controls">
             <button class="mobile-btn" onclick="changeImage(-1); event.stopPropagation();">上一張</button>
@@ -265,26 +280,25 @@
         var images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"];
         var currentIndex = 0;
         
-        // 縮放與拖曳變數
+        // 自由縮放與平移變數
         var scale = 1;
         var minScale = 1;
-        var maxScale = 4;
+        var maxScale = 5; // 放大上限提高至 5 倍，方便看微小細節
         var isDragging = false;
         var startX = 0, startY = 0;
         var translateX = 0, translateY = 0;
         
-        // 手機雙指觸控變數
+        // 手機雙指控管
         var touchStartDist = 0;
 
         function openLightbox(index) {
             currentIndex = index;
             resetZoom();
             document.getElementById('lightbox-img').src = images[currentIndex];
-            document.getElementById('lightbox').style.display = 'flex';
+            document.getElementById('lightbox').style.display = 'block';
             
-            // 綁定滾輪事件
+            // 綁定全螢幕監聽
             document.getElementById('lightbox').addEventListener('wheel', handleWheel, { passive: false });
-            // 綁定手機觸控事件
             var el = document.getElementById('lightbox');
             el.addEventListener('touchstart', handleTouchStart, { passive: false });
             el.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -293,7 +307,6 @@
 
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
-            // 移除監聽器預防異常
             document.getElementById('lightbox').removeEventListener('wheel', handleWheel);
         }
 
@@ -318,20 +331,20 @@
             img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
         }
 
-        /* 1. 滑鼠滾輪縮放邏輯 */
+        /* 滾輪縮放系統 */
         function handleWheel(e) {
             e.preventDefault();
-            var zoomFactor = 0.1;
+            var zoomFactor = 0.15;
             if (e.deltaY < 0) {
                 scale = Math.min(maxScale, scale + zoomFactor);
             } else {
                 scale = Math.max(minScale, scale - zoomFactor);
-                if (scale === 1) { translateX = 0; translateY = 0; } // 縮回原大小時校正置中
+                if (scale === 1) { translateX = 0; translateY = 0; }
             }
             updateTransform();
         }
 
-        /* 2. 電腦拖曳看細節邏輯 */
+        /* 電腦滑鼠拖曳觀看 */
         function startDrag(e) {
             if (scale > 1) {
                 isDragging = true;
@@ -350,7 +363,7 @@
             isDragging = false;
         }
 
-        /* 3. 手機單指拖曳與雙指手勢縮放邏輯 */
+        /* 手機單指拖曳、雙指捏合全螢幕放大縮小 */
         function handleTouchStart(e) {
             if (e.touches.length === 1 && scale > 1) {
                 isDragging = true;
