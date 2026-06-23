@@ -25,17 +25,12 @@
             max-width: 400px;
             width: 85%;
         }
-        /* Logo 圖片樣式 */
+        /* Logo 圖片樣式調整加大 */
         .logo {
-            max-width: 180px;
+            max-width: 240px;
             height: auto;
-            margin-bottom: 15px;
-        }
-        h1 {
-            font-size: 1.8rem;
-            color: #2b2622;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            margin-bottom: 20px;
+            margin-top: 10px;
         }
         p {
             color: #70665f;
@@ -58,13 +53,12 @@
             transition: border 0.2s;
         }
         input[type="text"]:focus {
-            border-color: #d15b28; /* 焦距時變成品牌橘色 */
+            border-color: #d15b28;
         }
-        /* 按鈕顏色改為搭配 Logo 的質感品牌橘色 */
         button {
             width: 100%;
             padding: 12px;
-            background-color: #d15b28; /* 添興橘色 */
+            background-color: #d15b28;
             color: white;
             border: none;
             border-radius: 6px;
@@ -75,7 +69,7 @@
             font-weight: bold;
         }
         button:hover {
-            background-color: #b3471b; /* 滑鼠移上去時變深橘色 */
+            background-color: #b3471b;
         }
         .error-msg {
             color: #b33939;
@@ -88,9 +82,9 @@
 <body>
 
     <div class="search-container">
+        <!-- 載入店名 Logo 圖片 -->
         <img src="0-logo-02.png" alt="添興家具 Logo" class="logo">
         
-        <h1>歡迎光臨添興家具</h1>
         <p>請輸入現場展品上的「商品編號」進行瀏覽</p>
         
         <div class="input-group">
