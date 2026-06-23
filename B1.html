@@ -27,11 +27,20 @@
             letter-spacing: 1px;
         }
 
+        /* 新增：客製架高床大標題樣式 */
+        .section-title {
+            text-align: center;
+            color: #2b2622;
+            font-size: 1.6rem;
+            margin: 30px 0 10px 0;
+            letter-spacing: 1px;
+        }
+
         /* 編號輸入區塊卡片樣式 */
         .search-container {
             background: #fff;
             max-width: 450px;
-            margin: 30px auto 15px auto;
+            margin: 40px auto 15px auto;
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
@@ -82,7 +91,7 @@
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             max-width: 1200px;
-            margin: 20px auto;
+            margin: 10px auto 20px auto; /* 縮減上方間距，讓它離大標題近一些 */
         }
         .card {
             background: #fff;
@@ -101,20 +110,7 @@
             aspect-ratio: 4/3;
             object-fit: cover;
             cursor: pointer;
-        }
-        .info {
-            padding: 15px 20px;
-        }
-        .info h3 {
-            margin: 0 0 8px 0;
-            font-size: 1.25rem;
-            color: #2b2622;
-        }
-        .info p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #70665f;
-            line-height: 1.5;
+            display: block; /* 確保純圖片卡片沒有下方小空隙 */
         }
         
         /* 燈箱基礎背景 */
@@ -224,9 +220,10 @@
 
         @media (max-width: 768px) {
             body { padding: 15px; }
+            .section-title { font-size: 1.4rem; margin: 25px 0 5px 0; }
             .search-container {
                 max-width: 90%;
-                margin: 25px auto 10px auto;
+                margin: 35px auto 10px auto;
                 padding: 15px;
             }
             .search-input { width: 50%; padding: 10px; }
@@ -253,203 +250,5 @@
 
     <div class="header">
         <img src="0-logo-02.png" alt="添興家具" class="header-logo">
-        <p>客製架高床線上型錄｜點擊圖片可放大觀看細節</p>
+        <p>點擊圖片可放大觀看細節</p>
     </div>
-
-    <div class="gallery">
-        <div class="card">
-            <img src="1.jpg" alt="多功能系統組合床組" onclick="openLightbox(0)">
-            <div class="info">
-                <h3>多功能系統組合床組</h3>
-                <p>整體視覺外觀。整合睡眠、書桌與超強收納機能，專為小空間打造的完美居家解決方案。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="2.jpg" alt="全抽屜開放式超大收納" onclick="openLightbox(1)">
-            <div class="info">
-                <h3>全抽屜開放式超大收納</h3>
-                <p>樓梯滑軌抽屜與床底大容量拉櫃，物品再多也能分類收納，維持房間清爽整潔。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="3.jpg" alt="上層寬敞睡眠空間" onclick="openLightbox(2)">
-            <div class="info">
-                <h3>上層寬敞睡眠空間</h3>
-                <p>結構穩固不搖晃，結合高側邊安全護欄，兼顧舒適睡眠與行動安全性。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="4.jpg" alt="隱藏式可抽拉延伸書桌" onclick="openLightbox(3)">
-            <div class="info">
-                <h3>隱藏式可抽拉延伸書桌</h3>
-                <p>需要時可輕鬆拉出作為工作讀書區，不用時推入即隱形，靈活釋放走道空間。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="5.jpg" alt="精緻木紋與現代無把手設計" onclick="openLightbox(4)">
-            <div class="info">
-                <h3>精緻木紋與現代無把手設計</h3>
-                <p>嚴選溫潤淺木紋材質，搭配質感無把手斜邊隱形拉門，美觀實用兼具。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="6.jpg" alt="一體化機能美學" onclick="openLightbox(5)">
-            <div class="info">
-                <h3>一體化機能美學</h3>
-                <p>將床座、梯櫃、抽拉桌完美結合，展現當代工藝與強大空間坪效。</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="search-container">
-        <div class="search-title">請輸入現場展品上的「商品編號」進行瀏覽</div>
-        <div class="search-box">
-            <input type="text" id="prodCode" class="search-input" placeholder="example：B1" value="B1">
-            <button class="search-btn" onclick="navigateToProduct()">開始瀏覽</button>
-        </div>
-    </div>
-
-    <div id="lightbox" class="lightbox">
-        <button class="close-btn" onclick="closeLightbox()">✕</button>
-        <button class="nav-btn prev-btn" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
-        <div class="img-container" id="imgContainer" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()" onmouseleave="endDrag()">
-            <img id="lightbox-img" src="" alt="放大圖">
-        </div>
-        <button class="nav-btn next-btn" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
-    </div>
-
-    <script>
-        var images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"];
-        var currentIndex = 0;
-        
-        var scale = 1;
-        var minScale = 1;
-        var maxScale = 5; 
-        var isDragging = false;
-        var startX = 0, startY = 0;
-        var translateX = 0, translateY = 0;
-        var touchStartDist = 0;
-
-        document.getElementById('prodCode').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                navigateToProduct();
-            }
-        });
-
-        function navigateToProduct() {
-            var code = document.getElementById('prodCode').value.trim().toUpperCase();
-            if (code === '') {
-                alert('請輸入商品編號！');
-                return;
-            }
-            window.location.href = code + '.html';
-        }
-
-        function openLightbox(index) {
-            currentIndex = index;
-            resetZoom();
-            document.getElementById('lightbox-img').src = images[currentIndex];
-            document.getElementById('lightbox').style.display = 'block';
-            
-            document.getElementById('lightbox').addEventListener('wheel', handleWheel, { passive: false });
-            var el = document.getElementById('lightbox');
-            el.addEventListener('touchstart', handleTouchStart, { passive: false });
-            el.addEventListener('touchmove', handleTouchMove, { passive: false });
-            el.addEventListener('touchend', handleTouchEnd);
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.getElementById('lightbox').removeEventListener('wheel', handleWheel);
-        }
-
-        function changeImage(step) {
-            currentIndex = currentIndex + step;
-            if (currentIndex >= images.length) currentIndex = 0;
-            if (currentIndex < 0) currentIndex = images.length - 1;
-            
-            resetZoom();
-            document.getElementById('lightbox-img').src = images[currentIndex];
-        }
-
-        function resetZoom() {
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
-            updateTransform();
-        }
-
-        function updateTransform() {
-            var img = document.getElementById('lightbox-img');
-            img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-        }
-
-        function handleWheel(e) {
-            e.preventDefault();
-            var zoomFactor = 0.15;
-            if (e.deltaY < 0) {
-                scale = Math.min(maxScale, scale + zoomFactor);
-            } else {
-                scale = Math.max(minScale, scale - zoomFactor);
-                if (scale === 1) { translateX = 0; translateY = 0; }
-            }
-            updateTransform();
-        }
-
-        function startDrag(e) {
-            if (scale > 1) {
-                isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-            }
-        }
-        function drag(e) {
-            if (isDragging) {
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateTransform();
-            }
-        }
-        function endDrag() {
-            isDragging = false;
-        }
-
-        function handleTouchStart(e) {
-            if (e.touches.length === 1 && scale > 1) {
-                isDragging = true;
-                startX = e.touches[0].clientX - translateX;
-                startY = e.touches[0].clientY - translateY;
-            } else if (e.touches.length === 2) {
-                isDragging = false;
-                touchStartDist = getTouchDist(e);
-            }
-        }
-
-        function handleTouchMove(e) {
-            e.preventDefault();
-            if (isDragging && e.touches.length === 1) {
-                translateX = e.touches[0].clientX - startX;
-                translateY = e.touches[0].clientY - startY;
-                updateTransform();
-            } else if (e.touches.length === 2) {
-                var currentDist = getTouchDist(e);
-                var factor = currentDist / touchStartDist;
-                touchStartDist = currentDist;
-                scale = Math.min(maxScale, Math.max(minScale, scale * factor));
-                if (scale === 1) { translateX = 0; translateY = 0; }
-                updateTransform();
-            }
-        }
-
-        function handleTouchEnd(e) {
-            isDragging = false;
-        }
-
-        function getTouchDist(e) {
-            var dx = e.touches[0].clientX - e.touches[1].clientX;
-            var dy = e.touches[0].clientY - e.touches[1].clientY;
-            return Math.sqrt(dx * dx + dy * dy);
-        }
-    </script>
-</body>
-</html>
