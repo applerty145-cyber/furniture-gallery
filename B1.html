@@ -74,36 +74,69 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.92);
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+            touch-action: none; /* 停用瀏覽器預設手勢操作，交由程式控制 */
         }
         .lightbox-content {
             position: relative;
             max-width: 90%;
-            max-height: 90%;
+            max-height: 80vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+        /* 放大容器與圖片：加入平滑縮放與抓取手勢 */
+        .img-container {
+            overflow: hidden;
+            cursor: grab;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .img-container:active {
+            cursor: grabbing;
+        }
         .lightbox img {
             max-width: 100%;
-            max-height: 90vh;
+            max-height: 80vh;
             border-radius: 4px;
             box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+            transform-origin: center center;
+            transition: transform 0.1s ease-out;
+            user-select: none;
+            -webkit-user-drag: none;
         }
         
-        /* 左右切換按鈕樣式 */
-        .nav-btn {
+        /* 關閉按鈕 */
+        .close-btn {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.2);
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
             color: white;
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1010;
+        }
+
+        /* 桌機版：兩側懸浮箭頭 */
+        .nav-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: none;
+            width: 55px;
+            height: 55px;
             font-size: 2rem;
             border-radius: 50%;
             cursor: pointer;
@@ -112,22 +145,47 @@
             align-items: center;
             transition: background 0.2s;
             user-select: none;
+            z-index: 1005;
         }
         .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.3);
         }
-        .prev-btn {
-            left: -70px;
-        }
-        .next-btn {
-            right: -70px;
+        .prev-btn { left: 40px; }
+        .next-btn { right: 40px; }
+
+        /* 手機版行動裝置優化 */
+        @media (max-width: 768px) {
+            /* 隱藏桌機版懸浮箭頭 */
+            .nav-btn { display: none; }
+            
+            /* 建立手機版底部專屬按鈕區塊（絕不覆蓋照片） */
+            .mobile-controls {
+                position: absolute;
+                bottom: 30px;
+                left: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                z-index: 1005;
+            }
+            .mobile-btn {
+                background: rgba(255, 255, 255, 0.25);
+                color: white;
+                border: 1px solid rgba(255,255,255,0.3);
+                padding: 10px 25px;
+                font-size: 1.1rem;
+                border-radius: 30px;
+                cursor: pointer;
+            }
+            .mobile-btn:active {
+                background: rgba(255, 255, 255, 0.4);
+            }
         }
 
-        /* 針對手機版畫面較窄時，調整按鈕位置避免穿幫 */
-        @media (max-width: 768px) {
-            .prev-btn { left: 10px; background: rgba(0,0,0,0.4); }
-            .next-btn { right: 10px; background: rgba(0,0,0,0.4); }
-            .nav-btn { width: 40px; height: 40px; font-size: 1.5rem; }
+        /* 桌機版隱藏手機專屬按鈕 */
+        @media (min-width: 769px) {
+            .mobile-controls { display: none; }
         }
     </style>
 </head>
@@ -139,7 +197,6 @@
     </div>
 
     <div class="gallery">
-        <!-- 商品 1 (索引 0) -->
         <div class="card">
             <img src="1.jpg" alt="多功能系統組合床組" onclick="openLightbox(0)">
             <div class="info">
@@ -147,7 +204,6 @@
                 <p>整體視覺外觀。整合睡眠、書桌與超強收納機能，專為小空間打造的完美居家解決方案。</p>
             </div>
         </div>
-        <!-- 商品 2 (索引 1) -->
         <div class="card">
             <img src="2.jpg" alt="全抽屜開放式超大收納" onclick="openLightbox(1)">
             <div class="info">
@@ -155,7 +211,6 @@
                 <p>樓梯滑軌抽屜與床底大容量拉櫃，物品再多也能分類收納，維持房間清爽整潔。</p>
             </div>
         </div>
-        <!-- 商品 3 (索引 2) -->
         <div class="card">
             <img src="3.jpg" alt="上層寬敞睡眠空間" onclick="openLightbox(2)">
             <div class="info">
@@ -163,7 +218,6 @@
                 <p>結構穩固不搖晃，結合高側邊安全護欄，兼顧舒適睡眠與行動安全性。</p>
             </div>
         </div>
-        <!-- 商品 4 (索引 3) -->
         <div class="card">
             <img src="4.jpg" alt="隱藏式可抽拉延伸書桌" onclick="openLightbox(3)">
             <div class="info">
@@ -171,7 +225,6 @@
                 <p>需要時可輕鬆拉出作為工作讀書區，不用時推入即隱形，靈活釋放走道空間。</p>
             </div>
         </div>
-        <!-- 商品 5 (索引 4) -->
         <div class="card">
             <img src="5.jpg" alt="精緻木紋與現代無把手設計" onclick="openLightbox(4)">
             <div class="info">
@@ -179,7 +232,6 @@
                 <p>嚴選溫潤淺木紋材質，搭配質感無把手斜邊隱形拉門，美觀實用兼具。</p>
             </div>
         </div>
-        <!-- 商品 6 (索引 5) -->
         <div class="card">
             <img src="6.jpg" alt="一體化機能美學" onclick="openLightbox(5)">
             <div class="info">
@@ -189,53 +241,151 @@
         </div>
     </div>
 
-    <!-- 增強型燈箱結構 -->
-    <div id="lightbox" class="lightbox" onclick="closeLightboxOutside(event)">
+    <div id="lightbox" class="lightbox" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()" onmouseleave="endDrag()">
+        
+        <button class="close-btn" onclick="closeLightbox()">✕</button>
+        
+        <button class="nav-btn prev-btn" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
+        
         <div class="lightbox-content">
-            <!-- 左切換鈕 -->
-            <button class="nav-btn prev-btn" onclick="changeImage(-1)">&#10094;</button>
-            
-            <!-- 大圖片 -->
-            <img id="lightbox-img" src="" alt="放大圖">
-            
-            <!-- 右切換鈕 -->
-            <button class="nav-btn next-btn" onclick="changeImage(1)">&#10095;</button>
+            <div class="img-container" id="imgContainer">
+                <img id="lightbox-img" src="" alt="放大圖">
+            </div>
+        </div>
+        
+        <button class="nav-btn next-btn" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
+        
+        <div class="mobile-controls">
+            <button class="mobile-btn" onclick="changeImage(-1); event.stopPropagation();">上一張</button>
+            <button class="mobile-btn" onclick="changeImage(1); event.stopPropagation();">下一張</button>
         </div>
     </div>
 
     <script>
-        // 把所有圖片的路徑存成陣列清單
         var images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"];
-        var currentIndex = 0; // 記錄目前看的是哪一張
+        var currentIndex = 0;
+        
+        // 縮放與拖曳變數
+        var scale = 1;
+        var minScale = 1;
+        var maxScale = 4;
+        var isDragging = false;
+        var startX = 0, startY = 0;
+        var translateX = 0, translateY = 0;
+        
+        // 手機雙指觸控變數
+        var touchStartDist = 0;
 
-        // 打開燈箱並傳入編號
         function openLightbox(index) {
             currentIndex = index;
+            resetZoom();
             document.getElementById('lightbox-img').src = images[currentIndex];
             document.getElementById('lightbox').style.display = 'flex';
+            
+            // 綁定滾輪事件
+            document.getElementById('lightbox').addEventListener('wheel', handleWheel, { passive: false });
+            // 綁定手機觸控事件
+            var el = document.getElementById('lightbox');
+            el.addEventListener('touchstart', handleTouchStart, { passive: false });
+            el.addEventListener('touchmove', handleTouchMove, { passive: false });
+            el.addEventListener('touchend', handleTouchEnd);
         }
 
-        // 切換圖片邏輯 (step 為 1 代表下一張，-1 代表上一張)
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            // 移除監聽器預防異常
+            document.getElementById('lightbox').removeEventListener('wheel', handleWheel);
+        }
+
         function changeImage(step) {
             currentIndex = currentIndex + step;
+            if (currentIndex >= images.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = images.length - 1;
             
-            // 如果超過最後一張，就跳回第一張
-            if (currentIndex >= images.length) {
-                currentIndex = 0;
-            }
-            // 如果比第一張還前面，就跳到最後一張
-            if (currentIndex < 0) {
-                currentIndex = images.length - 1;
-            }
-            
+            resetZoom();
             document.getElementById('lightbox-img').src = images[currentIndex];
         }
 
-        // 點擊黑背景才關閉（點擊箭頭或圖片本身不會誤關）
-        function closeLightboxOutside(event) {
-            if (event.target.id === "lightbox") {
-                document.getElementById('lightbox').style.display = 'none';
+        function resetZoom() {
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateTransform();
+        }
+
+        function updateTransform() {
+            var img = document.getElementById('lightbox-img');
+            img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        }
+
+        /* 1. 滑鼠滾輪縮放邏輯 */
+        function handleWheel(e) {
+            e.preventDefault();
+            var zoomFactor = 0.1;
+            if (e.deltaY < 0) {
+                scale = Math.min(maxScale, scale + zoomFactor);
+            } else {
+                scale = Math.max(minScale, scale - zoomFactor);
+                if (scale === 1) { translateX = 0; translateY = 0; } // 縮回原大小時校正置中
             }
+            updateTransform();
+        }
+
+        /* 2. 電腦拖曳看細節邏輯 */
+        function startDrag(e) {
+            if (scale > 1) {
+                isDragging = true;
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+            }
+        }
+        function drag(e) {
+            if (isDragging) {
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                updateTransform();
+            }
+        }
+        function endDrag() {
+            isDragging = false;
+        }
+
+        /* 3. 手機單指拖曳與雙指手勢縮放邏輯 */
+        function handleTouchStart(e) {
+            if (e.touches.length === 1 && scale > 1) {
+                isDragging = true;
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+            } else if (e.touches.length === 2) {
+                isDragging = false;
+                touchStartDist = getTouchDist(e);
+            }
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            if (isDragging && e.touches.length === 1) {
+                translateX = e.touches[0].clientX - startX;
+                translateY = e.touches[0].clientY - startY;
+                updateTransform();
+            } else if (e.touches.length === 2) {
+                var currentDist = getTouchDist(e);
+                var factor = currentDist / touchStartDist;
+                touchStartDist = currentDist;
+                scale = Math.min(maxScale, Math.max(minScale, scale * factor));
+                if (scale === 1) { translateX = 0; translateY = 0; }
+                updateTransform();
+            }
+        }
+
+        function handleTouchEnd(e) {
+            isDragging = false;
+        }
+
+        function getTouchDist(e) {
+            var dx = e.touches[0].clientX - e.touches[1].clientX;
+            var dy = e.touches[0].clientY - e.touches[1].clientY;
+            return Math.sqrt(dx * dx + dy * dy);
         }
     </script>
 
