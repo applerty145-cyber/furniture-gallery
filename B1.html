@@ -13,41 +13,36 @@
             position: relative;
         }
         
-        /* 修正：Header 改為讓文字居中，並留出右上角空間 */
-        .header {
-            text-align: center;
-            padding: 40px 0 10px 0; /* 增加上方留白 */
-        }
-        
-        /* 修正：Logo 縮小並固定至網頁右上角 */
+        /* 修正：Logo 保持在右上角，但最大寬度恢復為 200px */
         .header-logo {
             position: absolute;
             top: 25px;
             right: 25px;
-            max-width: 100px; /* 縮小 Logo 尺寸 */
+            max-width: 200px;
             height: auto;
+            z-index: 10;
         }
         
-        .header p {
-            color: #70665f;
-            font-size: 0.95rem;
-            margin: 0;
-            letter-spacing: 1px;
+        /* 標題與提示文字區塊 */
+        .title-container {
+            text-align: center;
+            padding-top: 50px; /* 留出空間給右上角的 Logo */
+            margin-bottom: 35px;
         }
 
-        /* 修正：將「客製架高床」大標題顯著放大，營造主視覺感 */
+        /* 「客製架高床」大標題樣式 */
         .section-title {
-            text-align: center;
             color: #4a3f35;
             font-family: "Noto Serif TC", "Songti TC", "ヒラギノ明朝 ProN", "MS 明朝", serif;
-            font-size: 2.2rem; /* 顯著放大字體（原本為 1.4rem） */
+            font-size: 2.2rem;
             font-weight: 500;
-            margin: 30px auto 35px auto;
-            letter-spacing: 4px; /* 微調字距讓大字更舒展 */
+            margin: 0 auto 15px auto; /* 縮減下方間距，讓副標題靠近 */
+            letter-spacing: 4px;
             position: relative;
             padding-bottom: 12px;
-            max-width: 280px; /* 配合字體放大，拉寬容器寬度避免斷行 */
+            max-width: 280px;
         }
+        /* 標題下方的文青細線 */
         .section-title::after {
             content: '';
             position: absolute;
@@ -57,6 +52,14 @@
             width: 50px;
             height: 1px;
             background-color: #c5bbae;
+        }
+
+        /* 修正：將提示文字移至大標題下方後的樣式 */
+        .hint-text {
+            color: #70665f;
+            font-size: 0.95rem;
+            margin: 15px 0 0 0;
+            letter-spacing: 1px;
         }
 
         /* 編號輸入區塊卡片樣式 */
@@ -93,379 +96,4 @@
         }
         .search-input:focus {
             outline: none;
-            border-color: #51463e;
-        }
-        .search-btn {
-            background-color: #e36c27;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 0.95rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .search-btn:hover {
-            background-color: #cb5918;
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 10px auto 20px auto;
-        }
-        .card {
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid #eae6e1;
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .card img {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 4/3;
-            object-fit: cover;
-            cursor: pointer;
-            display: block;
-        }
-        
-        /* 燈箱基礎背景 */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.98);
-            z-index: 1000;
-            overflow: hidden;
-            touch-action: none;
-        }
-        
-        /* 大圖容器 */
-        .img-container {
-            cursor: grab;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            padding: 0; 
-            margin: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1010;
-            pointer-events: auto;
-        }
-        .img-container:active {
-            cursor: grabbing;
-        }
-        
-        /* 燈箱圖片 */
-        .lightbox img {
-            width: 100%;
-            height: auto;
-            max-width: 100%;
-            max-height: 100vh;
-            object-fit: contain;
-            user-select: none;
-            -webkit-user-drag: none;
-            transform-origin: center center;
-            transition: transform 0.05s ease-out;
-        }
-        
-        /* 右上角關閉按鈕 */
-        .close-btn {
-            position: absolute;
-            top: calc(20px + env(safe-area-inset-top));
-            right: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.2);
-            width: 42px;
-            height: 42px;
-            font-size: 1.3rem;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 1040;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            pointer-events: auto;
-        }
-
-        /* 懸浮左右側箭頭 */
-        .nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.15);
-            width: 50px;
-            height: 50px;
-            font-size: 1.6rem;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.2s, transform 0.1s;
-            user-select: none;
-            z-index: 1030;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
-            pointer-events: auto;
-        }
-        .nav-btn:hover {
-            background: rgba(0, 0, 0, 0.7);
-        }
-        .nav-btn:active {
-            transform: translateY(-50%) scale(0.9);
-        }
-        
-        .prev-btn { left: 15px; }
-        .next-btn { right: 15px; }
-
-        @media (max-width: 768px) {
-            body { padding: 15px; }
-            
-            /* 行動裝置手機版排版微調 */
-            .header { padding: 35px 0 10px 0; }
-            .header-logo { top: 15px; right: 15px; max-width: 85px; } /* 手機版 Logo 更小 */
-            
-            .section-title { 
-                font-size: 1.8rem; /* 手機版字體微調，避免過大 */
-                margin: 25px auto 25px auto; 
-                letter-spacing: 3px; 
-                max-width: 240px;
-            }
-            
-            .search-container {
-                max-width: 90%;
-                margin: 35px auto 10px auto;
-                padding: 15px;
-            }
-            .search-input { width: 50%; padding: 10px; }
-            .search-btn { padding: 10px 18px; font-size: 0.9rem; }
-
-            .nav-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 1.3rem;
-                background: rgba(0, 0, 0, 0.5);
-            }
-            .prev-btn { left: 10px; }
-            .next-btn { right: 10px; }
-            
-            .lightbox img {
-                width: 100vw;
-                height: auto;
-                max-height: 100vh;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="header">
-        <img src="0-logo-02.png" alt="添興家具" class="header-logo">
-        <p>點擊圖片可放大觀看細節</p>
-    </div>
-
-    <h2 class="section-title">客製架高床</h2>
-
-    <div class="gallery">
-        <div class="card">
-            <img src="1.jpg" alt="客製架高床 01" onclick="openLightbox(0)">
-        </div>
-        <div class="card">
-            <img src="2.jpg" alt="客製架高床 02" onclick="openLightbox(1)">
-        </div>
-        <div class="card">
-            <img src="3.jpg" alt="客製架高床 03" onclick="openLightbox(2)">
-        </div>
-        <div class="card">
-            <img src="4.jpg" alt="客製架高床 04" onclick="openLightbox(3)">
-        </div>
-        <div class="card">
-            <img src="5.jpg" alt="客製架高床 05" onclick="openLightbox(4)">
-        </div>
-        <div class="card">
-            <img src="6.jpg" alt="客製架高床 06" onclick="openLightbox(5)">
-        </div>
-    </div>
-
-    <div class="search-container">
-        <div class="search-title">請輸入現場展品上的「商品編號」進行瀏覽</div>
-        <div class="search-box">
-            <input type="text" id="prodCode" class="search-input" placeholder="例如：B1" value="B1">
-            <button class="search-btn" onclick="navigateToProduct()">開始瀏覽</button>
-        </div>
-    </div>
-
-    <div id="lightbox" class="lightbox">
-        <button class="close-btn" onclick="closeLightbox()">✕</button>
-        <button class="nav-btn prev-btn" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
-        <div class="img-container" id="imgContainer" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()" onmouseleave="endDrag()">
-            <img id="lightbox-img" src="" alt="放大圖">
-        </div>
-        <button class="nav-btn next-btn" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
-    </div>
-
-    <script>
-        var images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"];
-        var currentIndex = 0;
-        
-        var scale = 1;
-        var minScale = 1;
-        var maxScale = 5; 
-        var isDragging = false;
-        var startX = 0, startY = 0;
-        var translateX = 0, translateY = 0;
-        var touchStartDist = 0;
-
-        document.getElementById('prodCode').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                navigateToProduct();
-            }
-        });
-
-        function navigateToProduct() {
-            var code = document.getElementById('prodCode').value.trim().toUpperCase();
-            if (code === '') {
-                alert('請輸入商品編號！');
-                return;
-            }
-            
-            var validCodes = ["B1", "B2", "B3"]; 
-            
-            if (validCodes.includes(code)) {
-                window.location.href = code + '.html';
-            } else {
-                alert('輸入錯誤，請確認現場展品編號是否正確。');
-            }
-        }
-
-        function openLightbox(index) {
-            currentIndex = index;
-            resetZoom();
-            document.getElementById('lightbox-img').src = images[currentIndex];
-            document.getElementById('lightbox').style.display = 'block';
-            
-            document.getElementById('lightbox').addEventListener('wheel', handleWheel, { passive: false });
-            var el = document.getElementById('lightbox');
-            el.addEventListener('touchstart', handleTouchStart, { passive: false });
-            el.addEventListener('touchmove', handleTouchMove, { passive: false });
-            el.addEventListener('touchend', handleTouchEnd);
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.getElementById('lightbox').removeEventListener('wheel', handleWheel);
-        }
-
-        function changeImage(step) {
-            currentIndex = currentIndex + step;
-            if (currentIndex >= images.length) currentIndex = 0;
-            if (currentIndex < 0) currentIndex = images.length - 1;
-            
-            resetZoom();
-            document.getElementById('lightbox-img').src = images[currentIndex];
-        }
-
-        function resetZoom() {
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
-            updateTransform();
-        }
-
-        function updateTransform() {
-            var img = document.getElementById('lightbox-img');
-            img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-        }
-
-        function handleWheel(e) {
-            e.preventDefault();
-            var zoomFactor = 0.15;
-            if (e.deltaY < 0) {
-                scale = Math.min(maxScale, scale + zoomFactor);
-            } else {
-                scale = Math.max(minScale, scale - zoomFactor);
-                if (scale === 1) { translateX = 0; translateY = 0; }
-            }
-            updateTransform();
-        }
-
-        function startDrag(e) {
-            if (scale > 1) {
-                isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-            }
-        }
-        function drag(e) {
-            if (isDragging) {
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateTransform();
-            }
-        }
-        function endDrag() {
-            isDragging = false;
-        }
-
-        function handleTouchStart(e) {
-            if (e.touches.length === 1 && scale > 1) {
-                isDragging = true;
-                startX = e.touches[0].clientX - translateX;
-                startY = e.touches[0].clientY - translateY;
-            } else if (e.touches.length === 2) {
-                isDragging = false;
-                touchStartDist = getTouchDist(e);
-            }
-        }
-
-        function handleTouchMove(e) {
-            e.preventDefault();
-            if (isDragging && e.touches.length === 1) {
-                translateX = e.touches[0].clientX - startX;
-                translateY = e.touches[0].clientY - startY;
-                updateTransform();
-            } else if (e.touches.length === 2) {
-                var currentDist = getTouchDist(e);
-                var factor = currentDist / touchStartDist;
-                touchStartDist = currentDist;
-                scale = Math.min(maxScale, Math.max(minScale, scale * factor));
-                if (scale === 1) { translateX = 0; translateY = 0; }
-                updateTransform();
-            }
-        }
-
-        function handleTouchEnd(e) {
-            isDragging = false;
-        }
-
-        function getTouchDist(e) {
-            var dx = e.touches[0].clientX - e.touches[1].clientX;
-            var dy = e.touches[0].clientY - e.touches[1].clientY;
-            return Math.sqrt(dx * dx + dy * dy);
-        }
-    </script>
-</body>
-</html>
+            border-color
