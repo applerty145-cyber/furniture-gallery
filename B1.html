@@ -31,7 +31,7 @@
         .search-container {
             background: #fff;
             max-width: 450px;
-            margin: 15px auto 30px auto;
+            margin: 30px auto 15px auto; /* 調整間距：上方留空，下方微調 */
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.04);
@@ -55,7 +55,7 @@
             border: 1px solid #d1c9bf;
             border-radius: 6px;
             font-size: 1rem;
-            text-align: center; /* 修正：確保文字居中對齊 */
+            text-align: center;
             text-transform: uppercase;
             color: #2b2622;
         }
@@ -64,7 +64,7 @@
             border-color: #51463e;
         }
         .search-btn {
-            background-color: #e36c27; /* 修正：調整為與首頁一致的品牌橘色 */
+            background-color: #e36c27;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -74,7 +74,7 @@
             transition: background 0.2s;
         }
         .search-btn:hover {
-            background-color: #cb5918; /* 修正：微調滑鼠懸停時的深橘色 */
+            background-color: #cb5918;
         }
 
         .gallery {
@@ -209,252 +209,4 @@
             z-index: 1030;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
             backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
-            pointer-events: auto;
-        }
-        .nav-btn:hover {
-            background: rgba(0, 0, 0, 0.7);
-        }
-        .nav-btn:active {
-            transform: translateY(-50%) scale(0.9);
-        }
-        
-        .prev-btn { left: 15px; }
-        .next-btn { right: 15px; }
-
-        /* 行動裝置手機版微調 */
-        @media (max-width: 768px) {
-            body { padding: 15px; }
-            .search-container {
-                max-width: 90%;
-                margin: 10px auto 20px auto;
-                padding: 15px;
-            }
-            .search-input { width: 50%; padding: 10px; }
-            .search-btn { padding: 10px 18px; font-size: 0.9rem; }
-
-            .nav-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 1.3rem;
-                background: rgba(0, 0, 0, 0.5);
-            }
-            .prev-btn { left: 10px; }
-            .next-btn { right: 10px; }
-            
-            .lightbox img {
-                width: 100vw;
-                height: auto;
-                max-height: 100vh;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="header">
-        <img src="0-logo-02.png" alt="添興家具" class="header-logo">
-        <p>客製架高床線上型錄｜點擊圖片可放大觀看細節</p>
-    </div>
-
-    <div class="search-container">
-        <div class="search-title">請輸入現場展品上的「商品編號」進行瀏覽</div>
-        <div class="search-box">
-            <input type="text" id="prodCode" class="search-input" placeholder="例如：B1" value="B1">
-            <button class="search-btn" onclick="navigateToProduct()">開始瀏覽</button>
-        </div>
-    </div>
-
-    <div class="gallery">
-        <div class="card">
-            <img src="1.jpg" alt="多功能系統組合床組" onclick="openLightbox(0)">
-            <div class="info">
-                <h3>多功能系統組合床組</h3>
-                <p>整體視覺外觀。整合睡眠、書桌與超強收納機能，專為小空間打造的完美居家解決方案。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="2.jpg" alt="全抽屜開放式超大收納" onclick="openLightbox(1)">
-            <div class="info">
-                <h3>全抽屜開放式超大收納</h3>
-                <p>樓梯滑軌抽屜與床底大容量拉櫃，物品再多也能分類收納，維持房間清爽整潔。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="3.jpg" alt="上層寬敞睡眠空間" onclick="openLightbox(2)">
-            <div class="info">
-                <h3>上層寬敞睡眠空間</h3>
-                <p>結構穩固不搖晃，結合高側邊安全護欄，兼顧舒適睡眠與行動安全性。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="4.jpg" alt="隱藏式可抽拉延伸書桌" onclick="openLightbox(3)">
-            <div class="info">
-                <h3>隱藏式可抽拉延伸書桌</h3>
-                <p>需要時可輕鬆拉出作為工作讀書區，不用時推入即隱形，靈活釋放走道空間。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="5.jpg" alt="精緻木紋與現代無把手設計" onclick="openLightbox(4)">
-            <div class="info">
-                <h3>精緻木紋與現代無把手設計</h3>
-                <p>嚴選溫潤淺木紋材質，搭配質感無把手斜邊隱形拉門，美觀實用兼具。</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="6.jpg" alt="一體化機能美學" onclick="openLightbox(5)">
-            <div class="info">
-                <h3>一體化機能美學</h3>
-                <p>將床座、梯櫃、抽拉桌完美結合，展現當代工藝與強大空間坪效。</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="lightbox" class="lightbox">
-        <button class="close-btn" onclick="closeLightbox()">✕</button>
-        
-        <button class="nav-btn prev-btn" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
-        
-        <div class="img-container" id="imgContainer" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()" onmouseleave="endDrag()">
-            <img id="lightbox-img" src="" alt="放大圖">
-        </div>
-        
-        <button class="nav-btn next-btn" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
-    </div>
-
-    <script>
-        var images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"];
-        var currentIndex = 0;
-        
-        var scale = 1;
-        var minScale = 1;
-        var maxScale = 5; 
-        var isDragging = false;
-        var startX = 0, startY = 0;
-        var translateX = 0, translateY = 0;
-        var touchStartDist = 0;
-
-        document.getElementById('prodCode').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                navigateToProduct();
-            }
-        });
-
-        function navigateToProduct() {
-            var code = document.getElementById('prodCode').value.trim().toUpperCase();
-            if (code === '') {
-                alert('請輸入商品編號！');
-                return;
-            }
-            window.location.href = code + '.html';
-        }
-
-        function openLightbox(index) {
-            currentIndex = index;
-            resetZoom();
-            document.getElementById('lightbox-img').src = images[currentIndex];
-            document.getElementById('lightbox').style.display = 'block';
-            
-            document.getElementById('lightbox').addEventListener('wheel', handleWheel, { passive: false });
-            var el = document.getElementById('lightbox');
-            el.addEventListener('touchstart', handleTouchStart, { passive: false });
-            el.addEventListener('touchmove', handleTouchMove, { passive: false });
-            el.addEventListener('touchend', handleTouchEnd);
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.getElementById('lightbox').removeEventListener('wheel', handleWheel);
-        }
-
-        function changeImage(step) {
-            currentIndex = currentIndex + step;
-            if (currentIndex >= images.length) currentIndex = 0;
-            if (currentIndex < 0) currentIndex = images.length - 1;
-            
-            resetZoom();
-            document.getElementById('lightbox-img').src = images[currentIndex];
-        }
-
-        function resetZoom() {
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
-            updateTransform();
-        }
-
-        function updateTransform() {
-            var img = document.getElementById('lightbox-img');
-            img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-        }
-
-        function handleWheel(e) {
-            e.preventDefault();
-            var zoomFactor = 0.15;
-            if (e.deltaY < 0) {
-                scale = Math.min(maxScale, scale + zoomFactor);
-            } else {
-                scale = Math.max(minScale, scale - zoomFactor);
-                if (scale === 1) { translateX = 0; translateY = 0; }
-            }
-            updateTransform();
-        }
-
-        function startDrag(e) {
-            if (scale > 1) {
-                isDragging = true;
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-            }
-        }
-        function drag(e) {
-            if (isDragging) {
-                translateX = e.clientX - startX;
-                translateY = e.clientY - startY;
-                updateTransform();
-            }
-        }
-        function endDrag() {
-            isDragging = false;
-        }
-
-        function handleTouchStart(e) {
-            if (e.touches.length === 1 && scale > 1) {
-                isDragging = true;
-                startX = e.touches[0].clientX - translateX;
-                startY = e.touches[0].clientY - translateY;
-            } else if (e.touches.length === 2) {
-                isDragging = false;
-                touchStartDist = getTouchDist(e);
-            }
-        }
-
-        function handleTouchMove(e) {
-            e.preventDefault();
-            if (isDragging && e.touches.length === 1) {
-                translateX = e.touches[0].clientX - startX;
-                translateY = e.touches[0].clientY - startY;
-                updateTransform();
-            } else if (e.touches.length === 2) {
-                var currentDist = getTouchDist(e);
-                var factor = currentDist / touchStartDist;
-                touchStartDist = currentDist;
-                scale = Math.min(maxScale, Math.max(minScale, scale * factor));
-                if (scale === 1) { translateX = 0; translateY = 0; }
-                updateTransform();
-            }
-        }
-
-        function handleTouchEnd(e) {
-            isDragging = false;
-        }
-
-        function getTouchDist(e) {
-            var dx = e.touches[0].clientX - e.touches[1].clientX;
-            var dy = e.touches[0].clientY - e.touches[1].clientY;
-            return Math.sqrt(dx * dx + dy * dy);
-        }
-    </script>
-
-</body>
-</html>
+            -webkit-backdrop-filter: blur(3
