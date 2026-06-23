@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>添興家具｜商品型錄展示</title>
     <style>
         body {
@@ -74,17 +74,18 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.96);
             z-index: 1000;
             overflow: hidden;
             touch-action: none;
         }
         
-        /* 解放圖片容器：讓它撐滿全螢幕，不再有限制大框框 */
+        /* 全滿版內容包覆區，手機版改用 flex 垂直排列確保按鈕不移出螢幕 */
         .lightbox-content {
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             position: absolute;
@@ -98,13 +99,14 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            height: 100%;
+            flex: 1; /* 在手機版會自動縮放，留空間給按鈕 */
+            overflow: hidden;
         }
         .img-container:active {
             cursor: grabbing;
         }
         
-        /* 圖片預設最大化，並套用變形 Origin 置中 */
+        /* 圖片預設最大化展示 */
         .lightbox img {
             max-width: 100%;
             max-height: 100%;
@@ -115,7 +117,7 @@
             transition: transform 0.05s ease-out;
         }
         
-        /* 獨立出來的頂部非覆蓋式關閉按鈕，永遠固定在最上層 */
+        /* 獨立頂部關閉按鈕 */
         .close-btn {
             position: absolute;
             top: 25px;
@@ -128,7 +130,7 @@
             font-size: 1.4rem;
             border-radius: 50%;
             cursor: pointer;
-            z-index: 1020; /* 確保在圖片和控制項之上 */
+            z-index: 1020;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -162,40 +164,41 @@
         .prev-btn { left: 30px; }
         .next-btn { right: 30px; }
 
-        /* 手機版：獨立底部控制列，與大圖分離，絕不遮擋、不受放大影響 */
+        /* 手機版：行動裝置全螢幕與按鈕適配優化 */
         @media (max-width: 768px) {
-            .nav-btn { display: none; } /* 隱藏桌機版兩側箭頭 */
+            .nav-btn { display: none; } /* 隱藏桌機版箭頭 */
             
+            /* 將控制列放入垂直佈局中，並加入安全區域底色與邊距 */
             .mobile-controls {
-                position: absolute;
-                bottom: 40px;
-                left: 0;
                 width: 100%;
                 display: flex;
                 justify-content: center;
-                gap: 25px;
-                z-index: 1010; /* 確保按鈕永遠浮在放大的圖片上方，不會被吃掉 */
+                gap: 30px;
+                padding-top: 15px;
+                padding-bottom: calc(25px + env(safe-area-inset-bottom)); /* 自動適配有底線、瀏海的手機 */
+                background: linear-gradient(to top, rgba(0,0,0,0.5), rgba(0,0,0,0)); /* 淡淡的漸層讓按鈕更清晰 */
+                z-index: 1010;
             }
             .mobile-btn {
                 background: rgba(255, 255, 255, 0.25);
                 color: white;
-                border: 1px solid rgba(255,255,255,0.2);
-                padding: 12px 30px;
+                border: 1px solid rgba(255,255,255,0.25);
+                padding: 12px 35px;
                 font-size: 1.05rem;
                 border-radius: 30px;
                 cursor: pointer;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-                backdrop-filter: blur(4px); /* 讓按鈕背景微微模糊，更有質感 */
-                -webkit-backdrop-filter: blur(4px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
             }
             .mobile-btn:active {
-                background: rgba(255, 255, 255, 0.4);
+                background: rgba(255, 255, 255, 0.45);
             }
             
-            /* 手機版讓圖片上下留出按鈕與關閉鍵的空間，中間盡可能最大化延伸 */
+            /* 調整直式螢幕下圖片的最大限制，確保完全不跟按鈕重疊 */
             .lightbox img {
-                max-width: 100%;
-                max-height: 80vh;
+                max-width: 95%;
+                max-height: 65vh;
             }
         }
 
@@ -257,7 +260,7 @@
         </div>
     </div>
 
-    <div id="lightbox" class="lightbox" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()" onmouseleave="endDrag()">
+    <div id="lightbox" class="lightbox">
         
         <button class="close-btn" onclick="closeLightbox()">✕</button>
         
@@ -265,14 +268,14 @@
         <button class="nav-btn next-btn" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
         
         <div class="lightbox-content">
-            <div class="img-container" id="imgContainer">
+            <div class="img-container" id="imgContainer" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()" onmouseleave="endDrag()">
                 <img id="lightbox-img" src="" alt="放大圖">
             </div>
-        </div>
-        
-        <div class="mobile-controls">
-            <button class="mobile-btn" onclick="changeImage(-1); event.stopPropagation();">上一張</button>
-            <button class="mobile-btn" onclick="changeImage(1); event.stopPropagation();">下一張</button>
+            
+            <div class="mobile-controls">
+                <button class="mobile-btn" onclick="changeImage(-1); event.stopPropagation();">上一張</button>
+                <button class="mobile-btn" onclick="changeImage(1); event.stopPropagation();">下一張</button>
+            </div>
         </div>
     </div>
 
@@ -283,7 +286,7 @@
         // 自由縮放與平移變數
         var scale = 1;
         var minScale = 1;
-        var maxScale = 5; // 放大上限提高至 5 倍，方便看微小細節
+        var maxScale = 5; 
         var isDragging = false;
         var startX = 0, startY = 0;
         var translateX = 0, translateY = 0;
