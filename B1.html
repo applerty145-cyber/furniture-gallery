@@ -55,7 +55,7 @@
             border: 1px solid #d1c9bf;
             border-radius: 6px;
             font-size: 1rem;
-            text-align: center;
+            text-align: center; /* 修正：確保文字居中對齊 */
             text-transform: uppercase;
             color: #2b2622;
         }
@@ -64,7 +64,7 @@
             border-color: #51463e;
         }
         .search-btn {
-            background-color: #51463e;
+            background-color: #e36c27; /* 修正：調整為與首頁一致的品牌橘色 */
             color: white;
             border: none;
             padding: 12px 24px;
@@ -74,7 +74,7 @@
             transition: background 0.2s;
         }
         .search-btn:hover {
-            background-color: #3d342e;
+            background-color: #cb5918; /* 修正：微調滑鼠懸停時的深橘色 */
         }
 
         .gallery {
@@ -131,7 +131,7 @@
             touch-action: none;
         }
         
-        /* 核心修正：大圖容器放在最底層，並允許接收所有點擊與拖曳事件 */
+        /* 大圖容器 */
         .img-container {
             cursor: grab;
             display: flex;
@@ -146,7 +146,7 @@
             top: 0;
             left: 0;
             z-index: 1010;
-            pointer-events: auto; /* 確保可以正常拖曳和雙指縮放 */
+            pointer-events: auto;
         }
         .img-container:active {
             cursor: grabbing;
@@ -165,7 +165,7 @@
             transition: transform 0.05s ease-out;
         }
         
-        /* 右上角關閉按鈕：提升至最高層級 */
+        /* 右上角關閉按鈕 */
         .close-btn {
             position: absolute;
             top: calc(20px + env(safe-area-inset-top));
@@ -178,7 +178,7 @@
             font-size: 1.3rem;
             border-radius: 50%;
             cursor: pointer;
-            z-index: 1040; /* 確保在最上層 */
+            z-index: 1040;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -188,7 +188,7 @@
             pointer-events: auto;
         }
 
-        /* 懸浮左右側箭頭：獨立高層級，且彼此之間透明區域不阻擋底下圖片的點擊 */
+        /* 懸浮左右側箭頭 */
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -206,11 +206,11 @@
             align-items: center;
             transition: background 0.2s, transform 0.1s;
             user-select: none;
-            z-index: 1030; /* 浮在圖片之上，但低於關閉按鈕 */
+            z-index: 1030;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
             backdrop-filter: blur(3px);
             -webkit-backdrop-filter: blur(3px);
-            pointer-events: auto; /* 按鈕本身維持可以點擊 */
+            pointer-events: auto;
         }
         .nav-btn:hover {
             background: rgba(0, 0, 0, 0.7);
