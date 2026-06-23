@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家具產品線上查詢系統</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #fdfcfb;
+            color: #3e3a36;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .search-container {
+            text-align: center;
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eae6e1;
+            max-width: 400px;
+            width: 85%;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #2b2622;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        p {
+            color: #70665f;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1.1rem;
+            border: 1px solid #c8bfb5;
+            border-radius: 6px;
+            box-sizing: border-box;
+            text-align: center;
+            text-transform: uppercase; /* 自動將英文轉大寫 */
+            outline: none;
+            transition: border 0.2s;
+        }
+        input[type="text"]:focus {
+            border-color: #8c7f76;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4a423a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            letter-spacing: 1px;
+        }
+        button:hover {
+            background-color: #36302a;
+        }
+        .error-msg {
+            color: #b33939;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-container">
+        <h1>歡迎光臨家具館</h1>
+        <p>請輸入現場展品上的「商品編號」進行瀏覽</p>
+        
+        <div class="input-group">
+            <input type="text" id="productCode" placeholder="例如：B1" autocomplete="off">
+            <div id="error" class="error-msg">找不到該編號，請重新輸入</div>
+        </div>
+        
+        <button onclick="searchProduct()">開始瀏覽</button>
+    </div>
+
+    <script>
+        function searchProduct() {
+            // 取得使用者輸入的字，轉成大寫並去掉空格
+            var code = document.getElementById('productCode').value.trim().toUpperCase();
+            var errorDiv = document.getElementById('error');
+            
+            if (code === "") {
+                errorDiv.textContent = "請輸入編號";
+                errorDiv.style.display = "block";
+                return;
+            }
+
+            // 目前只開放 B1，以後有 A1, C1 可以直接在下方括號裡增加，例如 ['B1', 'A1', 'C1']
+            var validCodes = ['B1']; 
+
+            if (validCodes.includes(code)) {
+                errorDiv.style.display = "none";
+                // 密碼正確，自動跳轉到對應的網頁（例如 B1.html）
+                window.location.href = code + ".html";
+            } else {
+                errorDiv.textContent = "找不到該編號，請重新輸入";
+                errorDiv.style.display = "block";
+            }
+        }
+
+        // 支援按 Enter 鍵直接送出
+        document.getElementById('productCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchProduct();
+            }
+        });
+    </script>
+
+</body>
+</html>
