@@ -15,7 +15,6 @@
             text-align: center;
             padding: 30px 0 20px 0;
         }
-        /* 家具頁頂部 Logo 樣式控制 */
         .header-logo {
             max-width: 200px;
             height: auto;
@@ -66,7 +65,8 @@
             color: #70665f;
             line-height: 1.5;
         }
-        /* 燈箱放大效果 */
+        
+        /* 燈箱基礎背景 */
         .lightbox {
             display: none;
             position: fixed;
@@ -79,66 +79,109 @@
             justify-content: center;
             align-items: center;
         }
-        .lightbox img {
+        .lightbox-content {
+            position: relative;
             max-width: 90%;
             max-height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
             border-radius: 4px;
             box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+        }
+        
+        /* 左右切換按鈕樣式 */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            font-size: 2rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.2s;
+            user-select: none;
+        }
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .prev-btn {
+            left: -70px;
+        }
+        .next-btn {
+            right: -70px;
+        }
+
+        /* 針對手機版畫面較窄時，調整按鈕位置避免穿幫 */
+        @media (max-width: 768px) {
+            .prev-btn { left: 10px; background: rgba(0,0,0,0.4); }
+            .next-btn { right: 10px; background: rgba(0,0,0,0.4); }
+            .nav-btn { width: 40px; height: 40px; font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <!-- 刪除文字，改為置中 Logo 圖 -->
         <img src="0-logo-02.png" alt="添興家具" class="header-logo">
         <p>客製架高床線上型錄｜點擊圖片可放大觀看細節</p>
     </div>
 
     <div class="gallery">
-        <!-- 商品 1 -->
+        <!-- 商品 1 (索引 0) -->
         <div class="card">
-            <img src="1.jpg" alt="多功能系統組合床組" onclick="openLightbox(this.src)">
+            <img src="1.jpg" alt="多功能系統組合床組" onclick="openLightbox(0)">
             <div class="info">
                 <h3>多功能系統組合床組</h3>
                 <p>整體視覺外觀。整合睡眠、書桌與超強收納機能，專為小空間打造的完美居家解決方案。</p>
             </div>
         </div>
-        <!-- 商品 2 -->
+        <!-- 商品 2 (索引 1) -->
         <div class="card">
-            <img src="2.jpg" alt="全抽屜開放式超大收納" onclick="openLightbox(this.src)">
+            <img src="2.jpg" alt="全抽屜開放式超大收納" onclick="openLightbox(1)">
             <div class="info">
                 <h3>全抽屜開放式超大收納</h3>
                 <p>樓梯滑軌抽屜與床底大容量拉櫃，物品再多也能分類收納，維持房間清爽整潔。</p>
             </div>
         </div>
-        <!-- 商品 3 -->
+        <!-- 商品 3 (索引 2) -->
         <div class="card">
-            <img src="3.jpg" alt="上層寬敞睡眠空間" onclick="openLightbox(this.src)">
+            <img src="3.jpg" alt="上層寬敞睡眠空間" onclick="openLightbox(2)">
             <div class="info">
                 <h3>上層寬敞睡眠空間</h3>
                 <p>結構穩固不搖晃，結合高側邊安全護欄，兼顧舒適睡眠與行動安全性。</p>
             </div>
         </div>
-        <!-- 商品 4 -->
+        <!-- 商品 4 (索引 3) -->
         <div class="card">
-            <img src="4.jpg" alt="隱藏式可抽拉延伸書桌" onclick="openLightbox(this.src)">
+            <img src="4.jpg" alt="隱藏式可抽拉延伸書桌" onclick="openLightbox(3)">
             <div class="info">
-                <h3>隱藏式可抽拉延伸书桌</h3>
+                <h3>隱藏式可抽拉延伸書桌</h3>
                 <p>需要時可輕鬆拉出作為工作讀書區，不用時推入即隱形，靈活釋放走道空間。</p>
             </div>
         </div>
-        <!-- 商品 5 -->
+        <!-- 商品 5 (索引 4) -->
         <div class="card">
-            <img src="5.jpg" alt="精緻木紋與現代無把手設計" onclick="openLightbox(this.src)">
+            <img src="5.jpg" alt="精緻木紋與現代無把手設計" onclick="openLightbox(4)">
             <div class="info">
                 <h3>精緻木紋與現代無把手設計</h3>
                 <p>嚴選溫潤淺木紋材質，搭配質感無把手斜邊隱形拉門，美觀實用兼具。</p>
             </div>
         </div>
-        <!-- 商品 6 -->
+        <!-- 商品 6 (索引 5) -->
         <div class="card">
-            <img src="6.jpg" alt="一體化機能美學" onclick="openLightbox(this.src)">
+            <img src="6.jpg" alt="一體化機能美學" onclick="openLightbox(5)">
             <div class="info">
                 <h3>一體化機能美學</h3>
                 <p>將床座、梯櫃、抽拉桌完美結合，展現當代工藝與強大空間坪效。</p>
@@ -146,18 +189,53 @@
         </div>
     </div>
 
-    <!-- 燈箱結構 -->
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
-        <img id="lightbox-img" src="" alt="放大圖">
+    <!-- 增強型燈箱結構 -->
+    <div id="lightbox" class="lightbox" onclick="closeLightboxOutside(event)">
+        <div class="lightbox-content">
+            <!-- 左切換鈕 -->
+            <button class="nav-btn prev-btn" onclick="changeImage(-1)">&#10094;</button>
+            
+            <!-- 大圖片 -->
+            <img id="lightbox-img" src="" alt="放大圖">
+            
+            <!-- 右切換鈕 -->
+            <button class="nav-btn next-btn" onclick="changeImage(1)">&#10095;</button>
+        </div>
     </div>
 
     <script>
-        function openLightbox(src) {
-            document.getElementById('lightbox-img').src = src;
+        // 把所有圖片的路徑存成陣列清單
+        var images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg"];
+        var currentIndex = 0; // 記錄目前看的是哪一張
+
+        // 打開燈箱並傳入編號
+        function openLightbox(index) {
+            currentIndex = index;
+            document.getElementById('lightbox-img').src = images[currentIndex];
             document.getElementById('lightbox').style.display = 'flex';
         }
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
+
+        // 切換圖片邏輯 (step 為 1 代表下一張，-1 代表上一張)
+        function changeImage(step) {
+            currentIndex = currentIndex + step;
+            
+            // 如果超過最後一張，就跳回第一張
+            if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+            // 如果比第一張還前面，就跳到最後一張
+            if (currentIndex < 0) {
+                currentIndex = images.length - 1;
+            }
+            
+            document.getElementById('lightbox-img').src = images[currentIndex];
+        }
+
+        // 點擊黑背景才關閉（點擊箭頭或圖片本身不會誤關）
+        function closeLightboxOutside(event) {
+            if (event.target.id === "lightbox") {
+                document.getElementById('lightbox').style.display = 'none';
+            }
         }
     </script>
 
