@@ -13,7 +13,7 @@
         }
         .header {
             text-align: center;
-            padding: 30px 0 20px 0;
+            padding: 30px 0 10px 0;
         }
         .header-logo {
             max-width: 200px;
@@ -26,6 +26,57 @@
             margin: 0;
             letter-spacing: 1px;
         }
+
+        /* 新增：編號輸入區塊卡片樣式（比照首頁質感） */
+        .search-container {
+            background: #fff;
+            max-width: 450px;
+            margin: 15px auto 30px auto;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid #eae6e1;
+            text-align: center;
+        }
+        .search-title {
+            font-size: 0.95rem;
+            color: #5a504a;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .search-input {
+            width: 55%;
+            padding: 12px 15px;
+            border: 1px solid #d1c9bf;
+            border-radius: 6px;
+            font-size: 1rem;
+            text-align: center;
+            text-transform: uppercase; /* 自動將輸入轉大寫 */
+            color: #2b2622;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #51463e;
+        }
+        .search-btn {
+            background-color: #51463e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .search-btn:hover {
+            background-color: #3d342e;
+        }
+
         .gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -93,7 +144,7 @@
             left: 0;
         }
         
-        /* 中央大圖展示容器：獨立限制在此區塊內縮放，絕不溢出到兩側箭頭 */
+        /* 中央大圖展示容器 */
         .img-container {
             cursor: grab;
             display: flex;
@@ -119,7 +170,7 @@
             transition: transform 0.05s ease-out;
         }
         
-        /* 頂層獨立右上角關閉按鈕 */
+        /* 頂層獨立關閉按鈕 */
         .close-btn {
             position: absolute;
             top: 25px;
@@ -139,7 +190,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        /* 經典左右側箭頭（採用並排不覆蓋邏輯） */
+        /* 左右側箭頭（並排不覆蓋邏輯） */
         .nav-btn {
             background: rgba(255, 255, 255, 0.15);
             color: white;
@@ -156,7 +207,7 @@
             user-select: none;
             z-index: 1010;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            flex-shrink: 0; /* 確保箭頭絕對不會被圖片擠壓變形 */
+            flex-shrink: 0;
         }
         .nav-btn:hover {
             background: rgba(255, 255, 255, 0.3);
@@ -165,24 +216,30 @@
             transform: scale(0.9);
         }
         
-        /* 桌機版給予兩側舒適的外邊距 */
         .prev-btn { margin-left: 25px; }
         .next-btn { margin-right: 25px; }
 
-        /* 行動裝置（手機版）微調 */
+        /* 行動裝置手機版微調 */
         @media (max-width: 768px) {
-            /* 手機版箭頭稍微縮小，並貼近螢幕邊緣，留出最大空間給大圖縮放 */
+            body { padding: 15px; }
+            .search-container {
+                max-width: 90%;
+                margin: 10px auto 20px auto;
+                padding: 15px;
+            }
+            .search-input { width: 50%; padding: 10px; }
+            .search-btn { padding: 10px 18px; font-size: 0.9rem; }
+
             .nav-btn {
                 width: 42px;
                 height: 42px;
                 font-size: 1.3rem;
-                background: rgba(0, 0, 0, 0.4); /* 用微黑底讓它在滿版全螢幕下更清晰 */
+                background: rgba(0, 0, 0, 0.4);
                 border: 1px solid rgba(255,255,255,0.15);
             }
             .prev-btn { margin-left: 8px; }
             .next-btn { margin-right: 8px; }
             
-            /* 手機版大圖預設高寬留下一點點邊距，讓左右箭頭並排時視覺比例最完美 */
             .lightbox img {
                 max-width: 100%;
                 max-height: 85vh;
@@ -195,6 +252,14 @@
     <div class="header">
         <img src="0-logo-02.png" alt="添興家具" class="header-logo">
         <p>客製架高床線上型錄｜點擊圖片可放大觀看細節</p>
+    </div>
+
+    <div class="search-container">
+        <div class="search-title">請輸入現場展品上的「商品編號」進行瀏覽</div>
+        <div class="search-box">
+            <input type="text" id="prodCode" class="search-input" placeholder="例如：B1" value="B1">
+            <button class="search-btn" onclick="navigateToProduct()">開始瀏覽</button>
+        </div>
     </div>
 
     <div class="gallery">
@@ -243,16 +308,12 @@
     </div>
 
     <div id="lightbox" class="lightbox">
-        
         <button class="close-btn" onclick="closeLightbox()">✕</button>
-        
         <div class="lightbox-main">
             <button class="nav-btn prev-btn" onclick="changeImage(-1); event.stopPropagation();">&#10094;</button>
-            
             <div class="img-container" id="imgContainer" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()" onmouseleave="endDrag()">
                 <img id="lightbox-img" src="" alt="放大圖">
             </div>
-            
             <button class="nav-btn next-btn" onclick="changeImage(1); event.stopPropagation();">&#10095;</button>
         </div>
     </div>
@@ -268,9 +329,24 @@
         var isDragging = false;
         var startX = 0, startY = 0;
         var translateX = 0, translateY = 0;
-        
-        // 手機雙指控管
         var touchStartDist = 0;
+
+        // 新增：處理編號輸入跳轉功能（支援按 Enter 鍵與點擊按鈕）
+        document.getElementById('prodCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                navigateToProduct();
+            }
+        });
+
+        function navigateToProduct() {
+            var code = document.getElementById('prodCode').value.trim().toUpperCase();
+            if (code === '') {
+                alert('請輸入商品編號！');
+                return;
+            }
+            // 跳轉至對應的 HTML 檔案（例如輸入 A1 就去 A1.html）
+            window.location.href = code + '.html';
+        }
 
         function openLightbox(index) {
             currentIndex = index;
@@ -278,7 +354,6 @@
             document.getElementById('lightbox-img').src = images[currentIndex];
             document.getElementById('lightbox').style.display = 'block';
             
-            // 綁定全螢幕監聽
             document.getElementById('lightbox').addEventListener('wheel', handleWheel, { passive: false });
             var el = document.getElementById('lightbox');
             el.addEventListener('touchstart', handleTouchStart, { passive: false });
@@ -344,7 +419,7 @@
             isDragging = false;
         }
 
-        /* 手機單指拖曳、雙指捏合全螢幕放大縮小 */
+        /* 手機觸控手勢 */
         function handleTouchStart(e) {
             if (e.touches.length === 1 && scale > 1) {
                 isDragging = true;
