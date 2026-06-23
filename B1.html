@@ -10,16 +10,24 @@
             background-color: #f5efe6;
             margin: 0;
             padding: 20px;
+            position: relative;
         }
+        
+        /* 修正：Header 改為讓文字居中，並留出右上角空間 */
         .header {
             text-align: center;
-            padding: 30px 0 10px 0;
+            padding: 40px 0 10px 0; /* 增加上方留白 */
         }
+        
+        /* 修正：Logo 縮小並固定至網頁右上角 */
         .header-logo {
-            max-width: 200px;
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            max-width: 100px; /* 縮小 Logo 尺寸 */
             height: auto;
-            margin-bottom: 10px;
         }
+        
         .header p {
             color: #70665f;
             font-size: 0.95rem;
@@ -27,27 +35,26 @@
             letter-spacing: 1px;
         }
 
-        /* 修正：文青感客製架高床大標題樣式 */
+        /* 修正：將「客製架高床」大標題顯著放大，營造主視覺感 */
         .section-title {
             text-align: center;
-            color: #4a3f35; /* 換成文青質感的深茶色 */
-            font-family: "Noto Serif TC", "Songti TC", "ヒラギノ明朝 ProN", "MS 明朝", serif; /* 換成優雅的襯線明體風格 */
-            font-size: 1.4rem; /* 微調縮小，顯得更精緻秀氣 */
+            color: #4a3f35;
+            font-family: "Noto Serif TC", "Songti TC", "ヒラギノ明朝 ProN", "MS 明朝", serif;
+            font-size: 2.2rem; /* 顯著放大字體（原本為 1.4rem） */
             font-weight: 500;
-            margin: 35px auto 25px auto;
-            letter-spacing: 3px; /* 拉開字距，營造呼吸感 */
+            margin: 30px auto 35px auto;
+            letter-spacing: 4px; /* 微調字距讓大字更舒展 */
             position: relative;
-            padding-bottom: 10px;
-            max-width: 180px;
+            padding-bottom: 12px;
+            max-width: 280px; /* 配合字體放大，拉寬容器寬度避免斷行 */
         }
-        /* 標題下方淡淡的文青襯線 */
         .section-title::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
+            width: 50px;
             height: 1px;
             background-color: #c5bbae;
         }
@@ -236,7 +243,18 @@
 
         @media (max-width: 768px) {
             body { padding: 15px; }
-            .section-title { font-size: 1.25rem; margin: 30px auto 20px auto; letter-spacing: 2px; }
+            
+            /* 行動裝置手機版排版微調 */
+            .header { padding: 35px 0 10px 0; }
+            .header-logo { top: 15px; right: 15px; max-width: 85px; } /* 手機版 Logo 更小 */
+            
+            .section-title { 
+                font-size: 1.8rem; /* 手機版字體微調，避免過大 */
+                margin: 25px auto 25px auto; 
+                letter-spacing: 3px; 
+                max-width: 240px;
+            }
+            
             .search-container {
                 max-width: 90%;
                 margin: 35px auto 10px auto;
@@ -327,7 +345,6 @@
             }
         });
 
-        // 修正：修正為與首頁一致的防錯檢查機制
         function navigateToProduct() {
             var code = document.getElementById('prodCode').value.trim().toUpperCase();
             if (code === '') {
@@ -335,7 +352,6 @@
                 return;
             }
             
-            // 目前系統內建合法的編號名單
             var validCodes = ["B1", "B2", "B3"]; 
             
             if (validCodes.includes(code)) {
