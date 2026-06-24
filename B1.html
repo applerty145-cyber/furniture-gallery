@@ -282,7 +282,65 @@
                 max-height: 100vh;
             }
         }
-    </style>
+<style>
+    /* 基礎設定：暖米色背景，保持素雅 */
+    body { 
+        font-family: 'M PLUS Rounded 1c', 'Noto Sans TC', sans-serif; 
+        background-color: #fcfbf9; /* 更淺的暖米色 */
+        margin: 0; 
+        padding: 40px 20px; 
+        color: #5d564f; /* 使用暖灰色字體，比純黑更溫柔 */
+        -webkit-tap-highlight-color: transparent; 
+        overscroll-behavior-y: none; 
+    }
+
+    /* 頂部 LOGO 與 按鈕：極簡化 */
+    .header-logo { position: absolute; top: 30px; right: 30px; max-width: 100px; opacity: 0.8; }
+    .back-btn { 
+        position: absolute; top: 30px; left: 30px; 
+        background: transparent; color: #8e847c; 
+        border: 1px solid #dcd7d2; padding: 8px 20px; 
+        border-radius: 4px; cursor: pointer; font-size: 0.9rem;
+        transition: all 0.3s;
+    }
+    .back-btn:hover { background: #f5f2ef; color: #5d564f; }
+
+    /* 標題：增加間距，呈現呼吸感 */
+    .section-title { 
+        color: #4a3f35; font-size: 1.5rem; font-weight: 500;
+        text-align: center; margin: 100px 0 60px 0; letter-spacing: 0.1em;
+    }
+
+    /* 藝廊：移除陰影，改用極細邊框 */
+    .gallery { 
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+        gap: 40px; max-width: 900px; margin: 0 auto; 
+    }
+    .card { 
+        background: #fff; border: 1px solid #eee; 
+        border-radius: 0; /* 改為直角，更具日系書籍感 */
+        overflow: hidden; cursor: pointer; transition: transform 0.6s ease;
+    }
+    .card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; transition: opacity 0.4s; }
+    .card:hover img { opacity: 0.8; }
+
+    /* 影片區塊 */
+    .video-container { max-width: 800px; margin: 80px auto; border: 1px solid #eee; padding: 5px; background: white; }
+    
+    /* 燈箱：依然維持原本的高功能性 */
+    #lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(250, 249, 247, 0.95); z-index: 99999; justify-content: center; align-items: center; }
+    #lightbox-img { max-width: 90vw; max-height: 80vh; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+    
+    /* 導航按鈕：改為深灰，與整體風格統一 */
+    .nav-btn { color: #ccc; }
+    .nav-btn:hover { color: #5d564f; }
+    
+    /* 點點：圓潤的小巧點 */
+    .dot { background: #e0dcd9; }
+    .dot.active { background: #a69e97; }
+
+    @media (max-width: 767px) { .nav-btn { display: none !important; } }
+</style>
 </head>
 <body>
 
